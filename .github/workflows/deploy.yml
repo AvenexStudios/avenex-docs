@@ -31,7 +31,10 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Build site
-        run: mkdocs build --strict
+        run: |
+          mkdir -p site
+          cp -R public/. site/
+          mkdocs build --strict -f AvenexRaceControl/mkdocs.yml
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -51,4 +54,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-

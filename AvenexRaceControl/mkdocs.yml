@@ -1,8 +1,12 @@
-site_name: Avenex Docs
-site_description: Public documentation hub for Avenex Studios projects.
-site_url: https://avenexstudios.github.io/avenex-docs/
+site_name: Avenex Race Control
+site_description: Race control, stewarding overlays and server administration for Assetto Corsa.
+site_url: https://avenexstudios.github.io/avenex-docs/AvenexRaceControl/
 repo_url: https://github.com/AvenexStudios/avenex-docs
 repo_name: AvenexStudios/avenex-docs
+edit_uri: edit/main/AvenexRaceControl/docs/
+
+docs_dir: docs
+site_dir: ../site/AvenexRaceControl
 
 theme:
   name: material
@@ -42,12 +46,10 @@ markdown_extensions:
       alternate_style: true
 
 nav:
-  - Home: index.md
-  - Avenex Race Control:
-      - Overview: AvenexRaceControl/index.md
-      - Installation: AvenexRaceControl/installation.md
-      - Server Admin: AvenexRaceControl/server-admin.md
-      - Overlays: AvenexRaceControl/overlays.md
-      - Rules And Sanctions: AvenexRaceControl/rules-and-sanctions.md
-      - Troubleshooting: AvenexRaceControl/troubleshooting.md
+  - Overview: index.md
+  - Installation: installation.md
+  - Server Admin: server-admin.md
+  - Overlays: overlays.md
+  - Rules And Sanctions: rules-and-sanctions.md
+  - Troubleshooting: troubleshooting.md
 
