@@ -1,0 +1,53 @@
+site_name: Avenex Docs
+site_description: Public documentation hub for Avenex Studios projects.
+site_url: https://avenexstudios.github.io/avenex-docs/
+repo_url: https://github.com/AvenexStudios/avenex-docs
+repo_name: AvenexStudios/avenex-docs
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  palette:
+    - scheme: slate
+      primary: black
+      accent: cyan
+      toggle:
+        icon: material/weather-sunny
+        name: Light mode
+    - scheme: default
+      primary: black
+      accent: cyan
+      toggle:
+        icon: material/weather-night
+        name: Dark mode
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+nav:
+  - Home: index.md
+  - Avenex Race Control:
+      - Overview: AvenexRaceControl/index.md
+      - Installation: AvenexRaceControl/installation.md
+      - Server Admin: AvenexRaceControl/server-admin.md
+      - Overlays: AvenexRaceControl/overlays.md
+      - Rules And Sanctions: AvenexRaceControl/rules-and-sanctions.md
+      - Troubleshooting: AvenexRaceControl/troubleshooting.md
+
