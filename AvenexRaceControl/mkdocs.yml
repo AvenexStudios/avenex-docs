@@ -1,6 +1,6 @@
 site_name: Avenex Race Control
 site_description: Race control, stewarding overlays and server administration for Assetto Corsa.
-site_url: https://avenexstudios.github.io/avenex-docs/AvenexRaceControl/
+site_url: https://docs.avenexstudio.com/AvenexRaceControl/
 repo_url: https://github.com/AvenexStudios/avenex-docs
 repo_name: AvenexStudios/avenex-docs
 edit_uri: edit/main/AvenexRaceControl/docs/
@@ -50,7 +50,7 @@ nav:
   - Installation: installation.md
   - Server Admin: server-admin.md
   - Overlays:
-      - Overview: overlays.md
+      - Overview: overlays/index.md
       - Gallery: overlays/gallery.md
   - Rules And Sanctions: rules-and-sanctions.md
   - Troubleshooting: troubleshooting.md

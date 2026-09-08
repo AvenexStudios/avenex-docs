@@ -7,7 +7,6 @@ configuration and penalty workflows for Assetto Corsa leagues.
 
 - [Installation](installation.md)
 - [Server Admin](server-admin.md)
-- [Overlays](overlays.md)
+- [Overlays](overlays/index.md)
 - [Rules And Sanctions](rules-and-sanctions.md)
 - [Troubleshooting](troubleshooting.md)
-
