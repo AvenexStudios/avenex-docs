@@ -49,7 +49,8 @@ nav:
   - Overview: index.md
   - Installation: installation.md
   - Server Admin: server-admin.md
-  - Overlays: overlays.md
-  - Overlay Gallery: overlay-gallery.md
+  - Overlays:
+      - Overview: overlays.md
+      - Gallery: overlays/gallery.md
   - Rules And Sanctions: rules-and-sanctions.md
   - Troubleshooting: troubleshooting.md

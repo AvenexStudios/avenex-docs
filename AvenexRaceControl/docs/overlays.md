@@ -10,5 +10,5 @@ Avenex Race Control uses overlay channels for different race-control situations.
 - **Native Enforcement HUD**: native Assetto Corsa HUD only for disqualification
   or native-only states when enabled.
 
-See [Overlay Gallery](overlay-gallery.md) for the screenshot catalog and capture
+See [Overlay Gallery](overlays/gallery.md) for the screenshot catalog and capture
 matrix.
