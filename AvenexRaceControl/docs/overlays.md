@@ -9,3 +9,6 @@ Avenex Race Control uses overlay channels for different race-control situations.
 - **Compliance Advisory**: advisory cards with countdowns or short driver instructions.
 - **Native Enforcement HUD**: native Assetto Corsa HUD only for disqualification
   or native-only states when enabled.
+
+See [Overlay Gallery](overlay-gallery.md) for the screenshot catalog and capture
+matrix.
