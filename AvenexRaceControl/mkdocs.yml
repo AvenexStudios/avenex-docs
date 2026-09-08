@@ -13,7 +13,6 @@ theme:
   language: en
   features:
     - navigation.sections
-    - navigation.indexes
     - navigation.top
     - search.suggest
     - search.highlight
