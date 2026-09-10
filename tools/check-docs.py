@@ -49,6 +49,8 @@ for relative in english:
         assert '<aside class="md-banner"' not in rendered, page
         header = rendered.split('<header ', 1)[1].split('</header>', 1)[0]
         assert 'avenex-header-version' in header and versions['version'] in header, page
+        assert 'for="__search"' not in header and 'data-md-component="search"' not in header, page
+        assert 'md-header__source' not in header, page
         parser.feed(rendered)
         for target_language, target_prefix in (("en", ""), ("es", "es/")):
             assert parser.languages[target_language] == "/AvenexRaceControl/" + target_prefix + route, page

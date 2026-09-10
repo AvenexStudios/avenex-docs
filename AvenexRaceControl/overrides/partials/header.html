@@ -1,6 +1,4 @@
-{#-
-  This file was automatically generated - do not edit
--#}
+{# Custom customer-facing header based on the pinned Material theme. #}
 {% set class = "md-header" %}
 {% if "navigation.tabs.sticky" in features %}
   {% set class = class ~ " md-header--shadow md-header--lifted" %}
@@ -44,18 +42,6 @@
     {% endif %}
     {% if config.extra.alternate %}
       {% include "partials/alternate.html" %}
-    {% endif %}
-    {% if "material/search" in config.plugins %}
-      <label class="md-header__button md-icon" for="__search">
-        {% set icon = config.theme.icon.search or "material/magnify" %}
-        {% include ".icons/" ~ icon ~ ".svg" %}
-      </label>
-      {% include "partials/search.html" %}
-    {% endif %}
-    {% if config.repo_url %}
-      <div class="md-header__source">
-        {% include "partials/source.html" %}
-      </div>
     {% endif %}
   </nav>
   {% if "navigation.tabs.sticky" in features %}
