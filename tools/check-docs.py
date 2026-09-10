@@ -51,6 +51,7 @@ for relative in english:
         assert 'avenex-header-version' in header and versions['version'] in header, page
         assert 'for="__search"' not in header and 'data-md-component="search"' not in header, page
         assert 'md-header__source' not in header, page
+        assert 'data-avenex-downloads' in header, page
         parser.feed(rendered)
         for target_language, target_prefix in (("en", ""), ("es", "es/")):
             assert parser.languages[target_language] == "/AvenexRaceControl/" + target_prefix + route, page

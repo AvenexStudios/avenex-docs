@@ -23,6 +23,7 @@ extra:
   version_label: "Versión preliminar"
 nav:
   - Inicio: index.md
+  - Descargas: downloads.md
   - Instalación: installation.md
   - Administración: server-admin.md
   - Incidentes: incidents.md

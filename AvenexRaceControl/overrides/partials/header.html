@@ -43,6 +43,10 @@
     {% if config.extra.alternate %}
       {% include "partials/alternate.html" %}
     {% endif %}
+    {% set download_label = "Descargas" if config.theme.language == "es" else "Downloads" %}
+    <a href="{{ 'downloads/' | url }}" class="md-header__button md-icon" title="{{ download_label }}" aria-label="{{ download_label }}" data-avenex-downloads>
+      {% include ".icons/material/download.svg" %}
+    </a>
   </nav>
   {% if "navigation.tabs.sticky" in features %}
     {% if "navigation.tabs" in features %}
