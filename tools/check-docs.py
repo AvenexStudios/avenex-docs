@@ -46,7 +46,7 @@ for relative in english:
         page = site / prefix / route / "index.html"
         parser = Links()
         rendered = page.read_text(encoding="utf-8")
-        assert 'data-md-component="announce"' not in rendered, page
+        assert '<aside class="md-banner"' not in rendered, page
         header = rendered.split('<header ', 1)[1].split('</header>', 1)[0]
         assert 'avenex-header-version' in header and versions['version'] in header, page
         parser.feed(rendered)
