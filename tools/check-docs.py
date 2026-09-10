@@ -45,7 +45,11 @@ for relative in english:
         prefix = "" if language == "en" else "es/"
         page = site / prefix / route / "index.html"
         parser = Links()
-        parser.feed(page.read_text(encoding="utf-8"))
+        rendered = page.read_text(encoding="utf-8")
+        assert 'data-md-component="announce"' not in rendered, page
+        header = rendered.split('<header ', 1)[1].split('</header>', 1)[0]
+        assert 'avenex-header-version' in header and versions['version'] in header, page
+        parser.feed(rendered)
         for target_language, target_prefix in (("en", ""), ("es", "es/")):
             assert parser.languages[target_language] == "/AvenexRaceControl/" + target_prefix + route, page
         for href in parser.links:

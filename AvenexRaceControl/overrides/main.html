@@ -1,4 +1,9 @@
 {% extends "base.html" %}
-{% block announce %}
-  Avenex Race Control {{ config.extra.product_version }} · {{ config.extra.version_label }}
+{% block extrahead %}
+  {{ super() }}
+  <style>
+    .avenex-header-label { display: flex; align-items: baseline; gap: .5rem; max-width: 100%; }
+    .avenex-header-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+    .avenex-header-version { flex: none; font-size: .65rem; font-weight: 400; opacity: .75; white-space: nowrap; }
+  </style>
 {% endblock %}
