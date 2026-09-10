@@ -1,0 +1,27 @@
+{
+  "product": "Avenex Race Control",
+  "version": "0.1.0",
+  "production": false,
+  "modules": [
+    {
+      "id": "track-cuts",
+      "version": "0.1.0"
+    },
+    {
+      "id": "drive-through",
+      "version": "0.1.0"
+    },
+    {
+      "id": "stop-and-go",
+      "version": "0.1.0"
+    },
+    {
+      "id": "disqualification",
+      "version": "0.1.0"
+    },
+    {
+      "id": "time-penalty",
+      "version": "0.1.0"
+    }
+  ]
+}

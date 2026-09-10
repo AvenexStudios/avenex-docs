@@ -3,13 +3,16 @@ site_description: Race control, stewarding overlays and server administration fo
 site_url: https://docs.avenexstudio.com/AvenexRaceControl/
 repo_url: https://github.com/AvenexStudios/avenex-docs
 repo_name: AvenexStudios/avenex-docs
-edit_uri: edit/main/AvenexRaceControl/docs/
+edit_uri: ""
 
 docs_dir: docs
+exclude_docs: |
+  es/
 site_dir: ../site/AvenexRaceControl
 
 theme:
   name: material
+  custom_dir: overrides
   language: en
   features:
     - navigation.sections
@@ -34,6 +37,17 @@ theme:
 plugins:
   - search
 
+extra:
+  product_version: "0.1.0"
+  version_label: "Preview version"
+  alternate:
+    - name: English
+      link: /AvenexRaceControl/
+      lang: en
+    - name: Español
+      link: /AvenexRaceControl/es/
+      lang: es
+
 markdown_extensions:
   - admonition
   - attr_list
@@ -54,3 +68,4 @@ nav:
       - Gallery: overlays/gallery.md
   - Rules And Sanctions: rules-and-sanctions.md
   - Troubleshooting: troubleshooting.md
+  - Versions: versions.md

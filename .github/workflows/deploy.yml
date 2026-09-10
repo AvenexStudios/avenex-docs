@@ -35,6 +35,8 @@ jobs:
           mkdir -p site
           cp -R public/. site/
           mkdocs build --strict -f AvenexRaceControl/mkdocs.yml
+          mkdocs build --strict -f AvenexRaceControl/mkdocs.es.yml
+          python tools/check-docs.py
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

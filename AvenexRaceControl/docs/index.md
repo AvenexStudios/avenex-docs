@@ -1,13 +1,16 @@
 # Avenex Race Control
 
-Avenex Race Control provides incident scoring, race-control overlays, server
-configuration and penalty workflows for Assetto Corsa leagues.
+Avenex Race Control helps drivers and league administrators manage incidents,
+track limits and race penalties in Assetto Corsa.
 
-## Documentation Map
+## Drivers
+- [Install the client](installation.md) before joining your league's server.
+- Read [overlay indicators](overlays/index.md) and [how to serve penalties](rules-and-sanctions.md).
+- Understand [incident points](incidents.md) and track limits.
 
-- [Installation](installation.md)
-- [Server Admin](server-admin.md)
-- [Incidents And Severity](incidents.md)
-- [Overlays](overlays/index.md)
-- [Rules And Sanctions](rules-and-sanctions.md)
-- [Troubleshooting](troubleshooting.md)
+## Administrators
+Use the [admin guide](server-admin.md) to configure points, penalties, service
+deadlines and driver notifications. Drivers must use a compatible client.
+
+See [current versions](versions.md) for the application and its modules.
+This is a preview edition, not a production release.

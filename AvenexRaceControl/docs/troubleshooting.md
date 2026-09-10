@@ -1,45 +1,30 @@
 # Troubleshooting
 
-Operational checks for the current Avenex Race Control build.
+## The overlay is missing
+Check that the Avenex client and CSP Lua apps are enabled. Confirm with your
+administrator that the server permits the relevant overlay. Rejoin after
+updating the client. The time monitor is hidden when the total is zero.
 
-## First Checks
+## Points or time look wrong
+Check saved values, not unsaved selections. New settings do not recalculate
+old incidents. Time from the incident ladder and track cuts accumulates;
+serving a pit penalty does not clear it.
 
-- Confirm the Assetto Corsa Lua app is enabled.
-- Confirm the server plugin is loaded.
-- Confirm the client joined an Avenex-enabled online session.
-- Confirm the server-admin panel applied the expected configuration.
+## The cut counter stopped
+At the configured limit it freezes until the corresponding DT/Stop & Go is
+served. A throttle time penalty does not reset the cut counter.
 
-## Puntos o tiempo inesperados
+## The report looks old
+Reload the report and confirm you opened the latest file rather than an
+archived copy. Wait for race results to finalize. Compare total time and
+completed laps, not an individual lap.
 
-Compruebe los valores guardados y los controles de servidor, no solo lo mostrado
-antes de pulsar Guardar. Un cambio afecta nuevos incidentes; no recalcula los
-anteriores. El tiempo acumulado no se multiplica por puntos y no desaparece al
-servir DT/S&G. Los recargos de cortes y de la escala se suman.
+## Admin works but joining fails
+The admin's HTTP service and the game's connection use different ports.
+Ask the server administrator to check the configured HTTP/TCP/UDP ports and
+the address used in the invitation.
 
-## Cortes
-
-El corte se cuenta al salir con cuatro ruedas, no al acabar el contador.
-El margen permite reaccionar; terminado el margen, un exceso de acelerador
-durante el control penaliza inmediatamente. Al limite, el contador se congela.
-Solo servir la sancion de ese limite permite volver a cero.
-
-## Reporte
-
-Abra el archivo cfg/avenex_post_race_results.html del servidor y revise su fecha
-de modificacion. Recargue el navegador; no compare con una copia archivada de
-otra carrera. El reporte depende de la finalizacion de resultados, no solo del
-primer piloto que cruza la meta. Compare tiempos totales, vueltas y recargos.
-
-## Admin disponible pero juego inaccesible
-
-El panel HTTP y la conexion del juego usan servicios/puertos distintos.
-Compruebe el proceso AssettoServer, puerto HTTP, puertos TCP/UDP configurados
-y si el enlace apunta a la direccion local o publica correcta.
-No suponga que un panel accesible prueba conectividad del juego.
-
-## Cambios de cliente y rendimiento
-
-Despues de desplegar archivos Lua vuelva a entrar para cargar la nueva version.
-No active el recorder de forma permanente: se usa para una prueba diagnostica
-acotada y puede agregar carga. Conserve los registros de sesion/error antes de
-limpiar el estado; no publique tokens ni datos de acceso.
+## Need help?
+Send your application version, session, selected rule and a description or
+screenshot to your league administrator. Never include an admin token,
+password or private configuration file in a public report.

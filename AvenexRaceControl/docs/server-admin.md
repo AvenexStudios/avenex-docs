@@ -1,618 +1,521 @@
-# Referencia del admin
+# Server administration
 
-Actualizado: 2026-09-10. Catalogo de las 63 opciones del esquema del admin.
-Los defaults de fabrica no sustituyen los valores guardados de cada servidor.
+Configure rules at `/avenex/admin` on your server's HTTP address. Keep access
+credentials private.
 
-## Guardar, activar y restablecer
+## Saving and enabling rules
+Save applies and stores your selections. Reload to confirm the saved values.
+Import/export transfers settings, not served penalties or race results.
+Back up settings before importing.
 
-Guardar aplica y persiste la configuracion; los clientes conectados reciben los valores.
-Recargar permite comprobar lo guardado. Exportar/importar mueve configuracion, no
-resultados ni sanciones cumplidas. No publique tokens ni archivos privados exportados.
+A field's server control has different effects:
+- For an on/off setting, disabling its server control forces it off.
+- For a penalty-ladder threshold, disabling its control disables that sanction.
+- For other numeric selectors, disabling the control allows the client's local
+  value. This does not mean zero. Keep scoring controls enabled for consistent
+  league rules.
 
-El control de cada campo no siempre significa "desactivar esa regla":
-en un interruptor, desmarcarlo fuerza false; en los umbrales de la escala,
-desmarcarlo deshabilita esa sancion. En otros selectores desmarcarlo permite
-el valor local del cliente: NO equivale a poner el numero en cero.
-Para carreras oficiales mantenga activos los controles de servidor de puntuacion.
+A field's Reset restores its default. The separate race-state reset clears
+session points and sanction memory; it is not a configuration reset.
+Changes do not recalculate past scores or penalties. The reaction and hold
+values for a cut apply when that cut starts.
 
-Reset de un campo recupera su default; no limpia la carrera.
-El reset de estado de carrera borra puntos y memoria de sanciones de la sesion;
-es una operacion distinta. Una nueva sesion tambien reinicia el estado del cliente.
-Modificar configuracion no recalcula sanciones ni puntos anteriores.
+## Choosing a setup
+Configure contact points first (defaults 1/2/3), then enable the ladder levels
+and thresholds you want. Set pit service in Avenex enforcement, not in legacy
+native controls. Enable post-race processing to apply accumulated penalty
+seconds to final results.
 
-## Como configurar
+For cuts, choose a count limit, service sanction, reaction margin, maximum
+throttle, control duration and time per violation. Example: 1 s margin, 20%
+throttle, 3 s control, +5 s. Excess throttle during the margin is allowed;
+the first excess during control adds +5 s immediately.
 
-- Puntuacion: en Penalty ladder elija puntos por contacto leve, heavy y spin.
-  Defaults 1, 2 y 3; rango 0..10. Contacto minimo conserva su default de 0.
-  Un 0 asigna cero puntos, no cambia la deteccion ni la severidad.
-- Escala: habilite la escala y solo los umbrales que quiera probar. Si varios
-  se cruzan de golpe se selecciona el nivel mas alto alcanzado, no una cola
-  de todas las sanciones intermedias.
-- Cortes: habilite la regla, elija limite y DT/S&G/DSQ, margen, acelerador maximo,
-  duracion y tiempo por exceso. Ejemplo: margen 1 s, maximo 20%, control 3 s y
-  +5 s. Antes de terminar el margen no hay sancion de acelerador; durante los
-  siguientes 3 s el primer exceso suma 5 s inmediatamente.
-- Servicio: use Avenex enforcement para vueltas de plazo, velocidad de boxes
-  y detencion S&G. No use los selectores de bloqueo nativo para configurar
-  el Stop & Go propio.
-- Tiempo: habilite Post-race penalties para aplicar el total emitido a los
-  resultados finales y HTML. Seconds per penalty configura el tiempo de la
-  escala de incidentes; los cortes tienen su propio selector de segundos.
-- VSC: el limite de velocidad, margen y tolerancia son independientes de la
-  regla de acelerador de cortes. La activacion manual y automatica son opciones
-  diferentes. Estos modulos no quedan aprobados por la aprobacion de cortes.
+For VSC/FCY, configure a speed limit and slowdown countdown separately from
+the throttle rule for cuts. Do not rely on disabled cards.
 
-Consulte [sanciones](rules-and-sanctions.md) e [incidentes](incidents.md).
+See [penalty behavior](rules-and-sanctions.md), [incident scoring](incidents.md)
+and [versions](versions.md).
 
-## Estado funcional
+## Settings
+Defaults below are factory values, not necessarily your saved values.
 
-| Modulo | Situacion al 2026-09-10 |
-| --- | --- |
-| Cortes | Etapa funcional aprobada por el propietario; arte final UX pendiente |
-| DT, S&G y DSQ | Pruebas individuales y combinadas reportadas como satisfactorias; confirmar valores configurables en cada despliegue |
-| Tiempo y resultados | Resultados nativos y HTML aceptados por el propietario; mantener revision de la generacion de informes |
-| Selectores de puntos | Implementados y con tests; pendientes de nueva prueba in-game |
-| Deteccion de incidentes | En validacion; no implica atribucion de culpa |
-| VSC manual/automatico | Disponible para pruebas, sin aprobacion general registrada |
-| Banderas azules, amarillas, exceso en boxes, HUD feedback | Tarjetas marcadas no implementadas en el admin; no asumir validacion productiva |
+### Penalty ladder
 
-## Opciones por tarjeta
 
-"Implementada" describe la disponibilidad del esquema, no una aprobacion de QA.
-Las descripciones de controles nativos legados se conservan como referencia:
-el flujo de sanciones actual solo invoca enforcement nativo para DSQ.
+#### Contact points
 
-### Escala de sanciones (Penalty ladder)
+Points per normal contact. Minimal contacts remain zero; changes apply only to new incidents.
 
-Disponibilidad en admin: implementada.
+- Default: **1** points.
+- Choices: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10.
 
-#### Puntos por contacto leve
+#### Heavy contact points
 
-Puntos por contacto normal o leve. Los contactos minimos siguen en cero; los cambios afectan solo incidentes nuevos.
+Points per heavy contact; does not change severity detection.
 
-- Clave: `CONTACT_POINTS`.
-- Default: `1` puntos.
-- Opciones: `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`.
+- Default: **2** points.
+- Choices: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10.
 
-#### Puntos por heavy
+#### Spin contact points
 
-Puntos por contacto fuerte; no cambia la deteccion de severidad.
+Points per contact with detected spin; a spin without contact is not an incident.
 
-- Clave: `HEAVY_CONTACT_POINTS`.
-- Default: `2` puntos.
-- Opciones: `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`.
+- Default: **3** points.
+- Choices: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10.
 
-#### Puntos por spin
+#### Incident ladder
 
-Puntos por contacto con trompo detectado; un trompo sin contacto no es un incidente.
+Apply official penalties from accumulated incident points.
 
-- Clave: `SPIN_CONTACT_POINTS`.
-- Default: `3` puntos.
-- Opciones: `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`.
+- Default: **false**.
+- Choices: Enabled, Disabled.
 
-#### Escala de incidentes
+#### Warning at
 
-Aplica sanciones oficiales segun los puntos de incidente acumulados.
+Incident points needed before issuing a warning.
 
-- Clave: `PENALTIES_ENABLED`.
-- Default: `false`.
-- Opciones: `true`, `false`.
+- Default: **8** points.
+- Choices: 2, 4, 6, 8, 10, 12, 16.
 
-#### Advertencia en
+#### Time penalty at
 
-Puntos de incidente necesarios antes de emitir una advertencia.
+Incident points needed before adding post-race time.
 
-- Clave: `WARNING_AT`.
-- Default: `8` puntos.
-- Opciones: `2`, `4`, `6`, `8`, `10`, `12`, `16`.
+- Default: **12** points.
+- Choices: 2, 4, 6, 8, 10, 12, 16, 24.
 
-#### Tiempo extra en
+#### Drive-through at
 
-Puntos de incidente necesarios antes de sumar tiempo post-carrera.
+Incident points needed before issuing a drive-through.
 
-- Clave: `TIME_PENALTY_AT`.
-- Default: `12` puntos.
-- Opciones: `2`, `4`, `6`, `8`, `10`, `12`, `16`, `24`.
+- Default: **16** points.
+- Choices: 2, 4, 6, 8, 10, 12, 16, 20, 24.
 
-#### Drive-through en
+#### Stop and go at
 
-Puntos de incidente necesarios antes de emitir un drive-through.
+Incident points needed before issuing a stop-and-go.
 
-- Clave: `DRIVE_THROUGH_AT`.
-- Default: `16` puntos.
-- Opciones: `2`, `4`, `6`, `8`, `10`, `12`, `16`, `20`, `24`.
+- Default: **20** points.
+- Choices: 2, 4, 6, 8, 10, 12, 16, 20, 24, 30.
 
-#### Stop and go en
+#### Disqualify at
 
-Puntos de incidente necesarios antes de emitir un stop and go.
+Incident points needed before disqualification.
 
-- Clave: `STOP_AND_GO_AT`.
-- Default: `20` puntos.
-- Opciones: `2`, `4`, `6`, `8`, `10`, `12`, `16`, `20`, `24`, `30`.
+- Default: **30** points.
+- Choices: 2, 4, 6, 8, 10, 16, 20, 24, 30, 40, 60.
 
-#### Descalificar en
+### Track cuts
 
-Puntos de incidente necesarios antes de descalificar.
 
-- Clave: `DISQUALIFY_AT`.
-- Default: `30` puntos.
-- Opciones: `2`, `4`, `6`, `8`, `10`, `16`, `20`, `24`, `30`, `40`, `60`.
+#### Track-cut rule
 
-### Cortes de pista (Track cuts)
+Count track-limit cuts independently from incident points.
 
-Disponibilidad en admin: implementada.
+- Default: **false**.
+- Choices: Enabled, Disabled.
 
-#### Regla de cortes
+#### Cut limit
 
-Cuenta cortes de pista de forma independiente de los puntos de incidente.
+Count four-wheel excursions up to this limit, then pause cuts and throttle penalties until the sanction is served.
 
-- Clave: `CUTS_ENABLED`.
-- Default: `false`.
-- Opciones: `true`, `false`.
+- Default: **3** cuts.
+- Choices: 1, 2, 3, 4, 5, 6, 8, 10.
 
-#### Limite de cortes
+#### Reaction margin
 
-Cuenta salidas con 4 ruedas hasta este limite. Pausa cortes y sanciones de acelerador hasta servir la sancion.
+Time after leaving the track to release the throttle. Throttle monitoring starts after this margin; the cut still counts.
 
-- Clave: `CUTS_LIMIT`.
-- Default: `3` cortes.
-- Opciones: `1`, `2`, `3`, `4`, `5`, `6`, `8`, `10`.
+- Default: **1000** ms.
+- Choices: 0, 500, 1000, 1500, 2000, 3000, 5000.
 
-#### Margen de reaccion
+#### Maximum throttle
 
-Tiempo desde la salida de pista para soltar el acelerador. El control comienza al terminar este margen; el corte se cuenta igualmente.
+Maximum throttle allowed during the hold period, after the reaction margin.
 
-- Clave: `CUT_GRACE_MS`.
-- Default: `1000` ms.
-- Opciones: `0`, `500`, `1000`, `1500`, `2000`, `3000`, `5000`.
+- Default: **10** %.
+- Choices: 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100.
 
-#### Acelerador maximo
+#### Throttle hold duration
 
-Porcentaje maximo durante el periodo de control, despues del margen de reaccion.
+Keep throttle at or below the maximum for this entire period after the reaction margin, even after rejoining.
 
-- Clave: `CUT_MAX_THROTTLE_PERCENT`.
-- Default: `10` %.
-- Opciones: `0`, `10`, `20`, `30`, `40`, `50`, `60`, `70`, `80`, `90`, `100`.
+- Default: **3** s.
+- Choices: 1, 2, 3, 4, 5, 10, 15.
 
-#### Duracion del control
+#### Throttle violation penalty
 
-Mantener el acelerador dentro del maximo durante todo este periodo tras el margen, incluso al volver a pista.
+After the reaction margin, immediately add these seconds on the first throttle excess, once per cut. Monitoring stops at the cut limit.
 
-- Clave: `CUT_THROTTLE_HOLD_SECONDS`.
-- Default: `3` s.
-- Opciones: `1`, `2`, `3`, `4`, `5`, `10`, `15`.
+- Default: **5** s.
+- Choices: 1, 2, 3, 5, 10, 15, 20, 30, 60.
 
-#### Tiempo por incumplimiento
+#### Cut sanction
 
-Tras el margen de reaccion, suma estos segundos inmediatamente al primer exceso, una vez por corte. El control se suspende al alcanzar el limite de cortes.
+Official penalty sent when the cut limit is reached.
 
-- Clave: `CUT_TIME_PENALTY_SECONDS`.
-- Default: `5` s.
-- Opciones: `1`, `2`, `3`, `5`, `10`, `15`, `20`, `30`, `60`.
+- Default: **DRIVE_THROUGH**.
+- Choices: Drive-through, Stop and go, Disqualification.
 
-#### Sancion por cortes
+### Blue flags
 
-Sancion oficial enviada cuando se alcanza el limite de cortes.
+This card is unavailable for configuring rules in this edition.
 
-- Clave: `CUTS_PENALTY_ACTION`.
-- Default: `DRIVE_THROUGH`.
-- Opciones: `DRIVE_THROUGH`, `STOP_AND_GO`, `DISQUALIFICATION`.
+#### Blue-flag rule
 
-### Banderas azules (Blue flags)
+Require yielding to the specific faster car behind.
 
-Disponibilidad en admin: no implementada / deshabilitada.
+- Default: **false**.
+- Choices: Enabled, Disabled.
 
-#### Regla de bandera azul
+#### Yield window
 
-Exige dejar pasar al auto rapido especifico que viene atras.
+Seconds before penalizing a missed blue flag.
 
-- Clave: `BLUE_FLAGS_ENABLED`.
-- Default: `false`.
-- Opciones: `true`, `false`.
+- Default: **10** s.
+- Choices: 5, 10, 15, 20.
 
-#### Ventana para ceder
+#### Behind distance
 
-Segundos antes de penalizar una bandera azul ignorada.
+Normalized track distance used to select the target behind.
 
-- Clave: `BLUE_FLAG_YIELD_SECONDS`.
-- Default: `10` s.
-- Opciones: `5`, `10`, `15`, `20`.
+- Default: **0.18** track.
+- Choices: 0.08, 0.12, 0.18, 0.25.
 
-#### Distancia atras
+#### Blue-flag sanction
 
-Distancia normalizada de pista usada para elegir el objetivo de atras.
+Official penalty sent if the target is not yielded.
 
-- Clave: `BLUE_FLAG_MAX_BEHIND_SPLINE_DELTA`.
-- Default: `0.18` pista.
-- Opciones: `0.08`, `0.12`, `0.18`, `0.25`.
+- Default: **DRIVE_THROUGH**.
+- Choices: Drive-through, Stop and go, Disqualification.
 
-#### Sancion de bandera azul
+### Yellow flags
 
-Sancion oficial enviada si no se deja pasar al objetivo.
+This card is unavailable for configuring rules in this edition.
 
-- Clave: `BLUE_FLAG_PENALTY_ACTION`.
-- Default: `DRIVE_THROUGH`.
-- Opciones: `DRIVE_THROUGH`, `STOP_AND_GO`, `DISQUALIFICATION`.
+#### Yellow-flag rule
 
-### Banderas amarillas (Yellow flags)
+Require a speed drop while a caution flag is active.
 
-Disponibilidad en admin: no implementada / deshabilitada.
+- Default: **false**.
+- Choices: Enabled, Disabled.
 
-#### Regla de bandera amarilla
+#### Slow-down window
 
-Exige bajar velocidad mientras una bandera amarilla esta activa.
+Time available to reduce speed under yellow.
 
-- Clave: `YELLOW_FLAGS_ENABLED`.
-- Default: `false`.
-- Opciones: `true`, `false`.
+- Default: **3000** ms.
+- Choices: 1000, 2000, 3000, 5000.
 
-#### Ventana para bajar
+#### Required slow-down
 
-Tiempo disponible para bajar velocidad bajo amarilla.
+Speed drop needed under yellow.
 
-- Clave: `YELLOW_FLAG_GRACE_MS`.
-- Default: `3000` ms.
-- Opciones: `1000`, `2000`, `3000`, `5000`.
+- Default: **10** km/h.
+- Choices: 5, 10, 15, 20.
 
-#### Reduccion requerida
+#### Yellow sanction
 
-Reduccion de velocidad necesaria bajo amarilla.
+Official penalty sent if the driver does not slow.
 
-- Clave: `YELLOW_FLAG_SPEED_DROP_KMH`.
-- Default: `10` km/h.
-- Opciones: `5`, `10`, `15`, `20`.
+- Default: **DRIVE_THROUGH**.
+- Choices: Drive-through, Stop and go, Disqualification.
 
-#### Sancion de amarilla
+### Virtual safety car
 
-Sancion oficial enviada si el piloto no baja velocidad.
 
-- Clave: `YELLOW_FLAG_PENALTY_ACTION`.
-- Default: `DRIVE_THROUGH`.
-- Opciones: `DRIVE_THROUGH`, `STOP_AND_GO`, `DISQUALIFICATION`.
+#### VSC / FCY rule
 
-### Virtual safety car (Virtual safety car)
+Enable Avenex virtual safety car and full-course-yellow speed enforcement.
 
-Disponibilidad en admin: implementada.
+- Default: **false**.
+- Choices: Enabled, Disabled.
 
-#### Regla VSC / FCY
+#### Manual VSC active
 
-Activa el virtual safety car / full-course-yellow de Avenex y su control de velocidad.
+Deploy or clear VSC from the server admin panel.
 
-- Clave: `VSC_ENABLED`.
-- Default: `false`.
-- Opciones: `true`, `false`.
+- Default: **false**.
+- Choices: Enabled, Disabled.
 
-#### VSC manual activo
+#### VSC speed limit
 
-Activa o limpia el VSC desde el panel admin del servidor.
+Maximum speed while VSC is active.
 
-- Clave: `VSC_MANUAL_ACTIVE`.
-- Default: `false`.
-- Opciones: `true`, `false`.
+- Default: **80** km/h.
+- Choices: 40, 50, 60, 80, 100.
 
-#### Limite VSC
+#### Slow-down countdown
 
-Velocidad maxima mientras el VSC esta activo.
+Seconds available to slow down after VSC deploys.
 
-- Clave: `VSC_SPEED_LIMIT_KMH`.
-- Default: `80` km/h.
-- Opciones: `40`, `50`, `60`, `80`, `100`.
+- Default: **10** s.
+- Choices: 5, 8, 10, 15, 20.
 
-#### Cuenta para bajar
+#### Speed tolerance
 
-Segundos disponibles para bajar velocidad cuando se activa el VSC.
+Extra km/h allowed over the VSC limit.
 
-- Clave: `VSC_SLOWDOWN_GRACE_SECONDS`.
-- Default: `10` s.
-- Opciones: `5`, `8`, `10`, `15`, `20`.
+- Default: **3** km/h.
+- Choices: 0, 2, 3, 5, 10.
 
-#### Tolerancia velocidad
+#### Speeding debounce
 
-Km/h extra permitidos sobre el limite VSC.
+Time above the VSC limit before issuing a penalty.
 
-- Clave: `VSC_SPEED_TOLERANCE_KMH`.
-- Default: `3` km/h.
-- Opciones: `0`, `2`, `3`, `5`, `10`.
+- Default: **500** ms.
+- Choices: 250, 500, 1000, 2000.
 
-#### Debounce exceso
+#### VSC speeding sanction
 
-Tiempo sobre el limite VSC antes de emitir sancion.
+Penalty sent if a driver exceeds the VSC limit after the countdown.
 
-- Clave: `VSC_SPEEDING_DEBOUNCE_MS`.
-- Default: `500` ms.
-- Opciones: `250`, `500`, `1000`, `2000`.
+- Default: **DRIVE_THROUGH**.
+- Choices: Drive-through, Stop and go, Disqualification.
 
-#### Sancion exceso VSC
+#### Auto-deploy
 
-Sancion enviada si un piloto supera el limite VSC despues de la cuenta.
+Deploy VSC automatically from heavy incidents, multi-car clusters, or stopped cars.
 
-- Clave: `VSC_PENALTY_ACTION`.
-- Default: `DRIVE_THROUGH`.
-- Opciones: `DRIVE_THROUGH`, `STOP_AND_GO`, `DISQUALIFICATION`.
+- Default: **false**.
+- Choices: Enabled, Disabled.
 
-#### Auto-activar
+#### Cluster contacts
 
-Activa VSC automaticamente por incidentes fuertes, multiples autos o autos detenidos.
+Nearby contact count needed to auto-deploy VSC.
 
-- Clave: `VSC_AUTO_DEPLOY_ENABLED`.
-- Default: `false`.
-- Opciones: `true`, `false`.
+- Default: **2** contacts.
+- Choices: 2, 3, 4.
 
-#### Contactos cluster
+#### Cluster window
 
-Cantidad de contactos cercanos necesaria para auto-activar VSC.
+Time window used to group multi-car incidents.
 
-- Clave: `VSC_AUTO_MIN_CONTACTS`.
-- Default: `2` contactos.
-- Opciones: `2`, `3`, `4`.
+- Default: **3000** ms.
+- Choices: 1500, 2500, 3000, 5000.
 
-#### Ventana cluster
+#### Cluster distance
 
-Ventana temporal para agrupar incidentes multiples.
+Maximum distance between contacts in the same VSC cluster.
 
-- Clave: `VSC_AUTO_CLUSTER_WINDOW_MS`.
-- Default: `3000` ms.
-- Opciones: `1500`, `2500`, `3000`, `5000`.
+- Default: **50** m.
+- Choices: 25, 50, 75, 100.
 
-#### Distancia cluster
+#### Heavy-contact deploy
 
-Distancia maxima entre contactos del mismo cluster VSC.
+Impact speed that deploys VSC immediately.
 
-- Clave: `VSC_AUTO_CLUSTER_DISTANCE_METERS`.
-- Default: `50` m.
-- Opciones: `25`, `50`, `75`, `100`.
+- Default: **35** km/h.
+- Choices: 25, 35, 45, 60.
 
-#### Impacto fuerte
+#### Stopped speed
 
-Velocidad de impacto que activa VSC inmediatamente.
+Speed treated as stopped for a post-contact car on track.
 
-- Clave: `VSC_AUTO_HEAVY_CONTACT_KMH`.
-- Default: `35` km/h.
-- Opciones: `25`, `35`, `45`, `60`.
+- Default: **5** km/h.
+- Choices: 2, 5, 8, 10.
 
-#### Velocidad detenido
+#### Stopped duration
 
-Velocidad considerada detenido para un auto post-contacto en pista.
+How long a recently contacted car must remain stopped on track before VSC deploys.
 
-- Clave: `VSC_AUTO_STOPPED_SPEED_KMH`.
-- Default: `5` km/h.
-- Opciones: `2`, `5`, `8`, `10`.
+- Default: **5000** ms.
+- Choices: 3000, 5000, 8000, 10000.
 
-#### Tiempo detenido
+#### Stopped contact window
 
-Tiempo que un auto contactado debe quedar detenido en pista antes de activar VSC.
+Maximum age of the previous contact used to consider a stopped car hazardous.
 
-- Clave: `VSC_AUTO_STOPPED_DURATION_MS`.
-- Default: `5000` ms.
-- Opciones: `3000`, `5000`, `8000`, `10000`.
+- Default: **15000** ms.
+- Choices: 10000, 15000, 20000, 30000.
 
-#### Ventana post-contacto
+#### Auto-clear delay
 
-Antiguedad maxima del contacto para considerar peligroso un auto detenido.
+Seconds without a new hazard before auto VSC clears.
 
-- Clave: `VSC_AUTO_STOPPED_CONTACT_WINDOW_MS`.
-- Default: `15000` ms.
-- Opciones: `10000`, `15000`, `20000`, `30000`.
+- Default: **20** s.
+- Choices: 10, 20, 30, 45, 60.
 
-#### Demora auto-clear
+### Pit speeding
 
-Segundos sin peligro nuevo antes de limpiar el VSC automatico.
+This card is unavailable for configuring rules in this edition.
 
-- Clave: `VSC_AUTO_CLEAR_SECONDS`.
-- Default: `20` s.
-- Opciones: `10`, `20`, `30`, `45`, `60`.
+#### Pit-speeding rule
 
-### Exceso en boxes (Pit speeding)
+Detect pit-lane speeding from client telemetry.
 
-Disponibilidad en admin: no implementada / deshabilitada.
+- Default: **false**.
+- Choices: Enabled, Disabled.
 
-#### Regla de velocidad en boxes
+#### Tolerance
 
-Detecta exceso de velocidad en boxes desde la telemetria del cliente.
+Speed allowed over the pit limit before enforcement.
 
-- Clave: `PIT_SPEEDING_ENABLED`.
-- Default: `false`.
-- Opciones: `true`, `false`.
-
-#### Tolerancia
-
-Velocidad permitida sobre el limite de boxes antes de sancionar.
-
-- Clave: `PIT_SPEEDING_TOLERANCE_KMH`.
-- Default: `2` km/h.
-- Opciones: `0`, `2`, `5`, `10`.
+- Default: **2** km/h.
+- Choices: 0, 2, 5, 10.
 
 #### Debounce
 
-Tiempo sobre el limite antes de emitir una sancion.
+Time over the limit before a penalty is issued.
 
-- Clave: `PIT_SPEEDING_DEBOUNCE_MS`.
-- Default: `250` ms.
-- Opciones: `100`, `250`, `500`, `1000`.
+- Default: **250** ms.
+- Choices: 100, 250, 500, 1000.
 
-#### Sancion por boxes
+#### Pit-speeding sanction
 
-Sancion oficial enviada por exceso de velocidad en boxes.
+Official penalty sent for pit-lane speeding.
 
-- Clave: `PIT_SPEEDING_PENALTY_ACTION`.
-- Default: `DRIVE_THROUGH`.
-- Opciones: `DRIVE_THROUGH`, `STOP_AND_GO`, `DISQUALIFICATION`.
+- Default: **DRIVE_THROUGH**.
+- Choices: Drive-through, Stop and go, Disqualification.
 
-### Enforcement Avenex (Avenex enforcement)
+### Avenex enforcement
 
-Disponibilidad en admin: implementada.
 
-#### Servicio DT/S&G Avenex
+#### Avenex DT/S&G service
 
-Controla drive-through y stop-and-go desde Avenex en lugar del HUD nativo AC/CSP.
+Track drive-through and stop-and-go service in Avenex instead of native AC/CSP HUD.
 
-- Clave: `RACE_PENALTY_SERVICE_ENABLED`.
-- Default: `true`.
-- Opciones: `true`, `false`.
+- Default: **true**.
+- Choices: Enabled, Disabled.
 
-#### Limite DT
+#### DT deadline
 
-Limite basado en la vuelta actual antes de escalar un DT incumplido a descalificacion.
+Current-lap based deadline before missed DT escalates to disqualification.
 
-- Clave: `DRIVE_THROUGH_DEADLINE_LAPS`.
-- Default: `1` vueltas.
-- Opciones: `1`, `2`, `3`.
+- Default: **1** laps.
+- Choices: 1, 2, 3.
 
-#### Tolerancia DT
+#### DT speed tolerance
 
-Km/h extra permitidos sobre el limite de boxes al cumplir un drive-through.
+Extra km/h allowed over the pit limit while serving a drive-through.
 
-- Clave: `DRIVE_THROUGH_PIT_SPEED_TOLERANCE_KMH`.
-- Default: `2` km/h.
-- Opciones: `0`, `2`, `5`, `10`.
+- Default: **2** km/h.
+- Choices: 0, 2, 5, 10.
 
-#### Limite pit fallback
+#### Pit limit fallback
 
-Limite de velocidad fallback si el cliente no puede leer el valor de sesion.
+Fallback pit speed limit if the client cannot read the session value.
 
-- Clave: `RACE_PENALTY_PIT_SPEED_LIMIT_KMH`.
-- Default: `80` km/h.
-- Opciones: `30`, `50`, `60`, `80`.
+- Default: **80** km/h.
+- Choices: 30, 50, 60, 80.
 
-#### Limite S&G
+#### S&G deadline
 
-Limite basado en la vuelta actual antes de escalar un stop and go incumplido a descalificacion.
+Current-lap based deadline before missed stop-and-go escalates to disqualification.
 
-- Clave: `STOP_AND_GO_DEADLINE_LAPS`.
-- Default: `1` vueltas.
-- Opciones: `1`, `2`, `3`.
+- Default: **1** laps.
+- Choices: 1, 2, 3.
 
-#### Detencion S&G
+#### S&G hold
 
-Segundos que el piloto debe quedar detenido en boxes.
+Seconds the driver must stay stopped in pit lane.
 
-- Clave: `STOP_AND_GO_SECONDS`.
-- Default: `5` s.
-- Opciones: `3`, `5`, `10`, `15`, `30`.
+- Default: **5** s.
+- Choices: 3, 5, 10, 15, 30.
 
-#### Velocidad detenido
+#### Stopped speed
 
-Velocidad maxima considerada detenido para contar el stop and go.
+Maximum speed treated as stopped for stop-and-go hold tracking.
 
-- Clave: `STOP_AND_GO_STOP_SPEED_KMH`.
-- Default: `1` km/h.
-- Opciones: `0`, `1`, `2`, `5`.
+- Default: **1** km/h.
+- Choices: 0, 1, 2, 5.
 
-### Tiempo post-carrera (Post-race time)
+### Post-race time
 
-Disponibilidad en admin: implementada.
 
-#### Penalizaciones post-carrera
+#### Post-race penalties
 
-Suma los segundos sancionados a los resultados finales nativos y al reporte de auditoria.
+Add issued penalty seconds to native final race results and the audit report.
 
-- Clave: `POST_RACE_TIME_PENALTIES_ENABLED`.
-- Default: `false`.
-- Opciones: `true`, `false`.
+- Default: **false**.
+- Choices: Enabled, Disabled.
 
-#### Segundos por sancion
+#### Seconds per penalty
 
-Segundos asignados al alcanzar el umbral de penalizacion de tiempo.
+Seconds issued when the time penalty threshold is reached.
 
-- Clave: `TIME_PENALTY_SECONDS_PER_POINT`.
-- Default: `1` s.
-- Opciones: `0`, `1`, `2`, `3`, `5`, `10`.
+- Default: **1** s.
+- Choices: 0, 1, 2, 3, 5, 10.
 
-### Enforcement nativo (Native enforcement)
+### Native enforcement
 
-Disponibilidad en admin: implementada.
+The current flow uses native enforcement only for disqualification. Legacy DT and hold selectors do not configure Avenex pit service.
 
-#### Enforcement nativo
+#### Native enforcement
 
-Usa el HUD nativo de CSP para drive-through, bloqueo y bandera negra como canal Native Enforcement HUD.
+Enables the native disqualification command. Does not enable native DT or Stop & Go.
 
-- Clave: `NATIVE_ENFORCEMENT_ENABLED`.
-- Default: `false`.
-- Opciones: `true`, `false`.
+- Default: **false**.
+- Choices: Enabled, Disabled.
 
-Control nativo legado: no cambia la duracion ni el servicio del DT/S&G propio.
+#### DT deadline
 
-#### Limite DT
+Legacy setting, with no effect on Avenex DT/Stop & Go service. Use Avenex enforcement.
 
-Parametro CSP de vencimiento de drive-through basado en la vuelta actual.
+- Default: **2** laps.
+- Choices: 1, 2, 3.
 
-- Clave: `NATIVE_DRIVE_THROUGH_LAPS`.
-- Default: `2` vueltas.
-- Opciones: `1`, `2`, `3`.
+#### Hold duration
 
-Control nativo legado: no cambia la duracion ni el servicio del DT/S&G propio.
+Legacy setting, with no effect on Avenex DT/Stop & Go service. Use Avenex enforcement.
 
-#### Duracion de bloqueo
+- Default: **5** s.
+- Choices: 5, 10, 15, 30.
 
-Segundos con controles bloqueados para stop and go.
+#### Server chat messages
 
-- Clave: `NATIVE_STOP_AND_GO_SECONDS`.
-- Default: `5` s.
-- Opciones: `5`, `10`, `15`, `30`.
+Send Avenex penalty chat messages in addition to native HUD.
 
-Control nativo legado: no cambia la duracion ni el servicio del DT/S&G propio.
+- Default: **true**.
+- Choices: Enabled, Disabled.
 
-#### Mensajes de chat del servidor
+### Server overlays
 
-Envia mensajes de sancion Avenex ademas del HUD nativo.
 
-- Clave: `SEND_PENALTY_CHAT_MESSAGES`.
-- Default: `true`.
-- Opciones: `true`, `false`.
+#### Avenex overlays
 
-### Overlays del servidor (Server overlays)
+Force Avenex overlay channels on or off for connected clients. This server value overrides the client local INI.
 
-Disponibilidad en admin: implementada.
+- Default: **true**.
+- Choices: Enabled, Disabled.
 
-#### Overlays Avenex
+### HUD feedback
 
-Fuerza el encendido o apagado de los canales de overlay Avenex en los clientes conectados. Este valor del servidor pisa el INI local del cliente.
+This card is unavailable for configuring rules in this edition.
 
-- Clave: `UI_OVERLAY_ENABLED`.
-- Default: `true`.
-- Opciones: `true`, `false`.
+#### Incident monitor
 
-### Feedback HUD (HUD feedback)
+Show the compact incident monitor.
 
-Disponibilidad en admin: no implementada / deshabilitada.
+- Default: **true**.
+- Choices: Enabled, Disabled.
 
-#### Monitor de incidentes
+#### Cut monitor
 
-Muestra el monitor compacto de incidentes.
+Show the compact cuts monitor.
 
-- Clave: `UI_SHOW_MAIN`.
-- Default: `true`.
-- Opciones: `true`, `false`.
+- Default: **true**.
+- Choices: Enabled, Disabled.
 
-#### Monitor de cortes
+#### Race Control Banners
 
-Muestra el monitor compacto de cortes.
+Show Avenex Race Control Banner overlays.
 
-- Clave: `UI_SHOW_CUTS`.
-- Default: `true`.
-- Opciones: `true`, `false`.
+- Default: **true**.
+- Choices: Enabled, Disabled.
 
-#### Banners de Race Control
+#### Compliance Advisories
 
-Muestra overlays del canal Race Control Banner de Avenex.
+Show Avenex Compliance Advisory overlays.
 
-- Clave: `UI_SHOW_TOASTS`.
-- Default: `true`.
-- Opciones: `true`, `false`.
+- Default: **true**.
+- Choices: Enabled, Disabled.
 
-#### Advisories de cumplimiento
+#### Post-race monitor
 
-Muestra overlays del canal Compliance Advisory de Avenex.
+Show the compact post-race seconds monitor.
 
-- Clave: `UI_SHOW_FLAGS`.
-- Default: `true`.
-- Opciones: `true`, `false`.
-
-#### Monitor post-carrera
-
-Muestra el monitor compacto de segundos post-carrera.
-
-- Clave: `UI_PENALTY_SECONDS_MONITOR_ENABLED`.
-- Default: `false`.
-- Opciones: `true`, `false`.
+- Default: **false**.
+- Choices: Enabled, Disabled.
 
