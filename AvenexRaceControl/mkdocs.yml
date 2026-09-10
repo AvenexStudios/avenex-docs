@@ -48,6 +48,7 @@ nav:
   - Overview: index.md
   - Installation: installation.md
   - Server Admin: server-admin.md
+  - Incidents: incidents.md
   - Overlays:
       - Overview: overlays/index.md
       - Gallery: overlays/gallery.md
