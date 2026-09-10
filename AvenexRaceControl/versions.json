@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "production": false,
   "modules": [
+    { "id": "incidents", "version": "0.1.0" },
     {
       "id": "track-cuts",
       "version": "0.1.0"

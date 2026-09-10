@@ -1,5 +1,9 @@
 # Incidentes y severidad
 
+Incluido en Avenex Race Control **0.1.0**: detección de contactos,
+clasificación de severidad y puntuación de incidentes. Consulta las
+[versiones de los módulos](versions.md).
+
 Avenex cuenta participación en accidentes, no culpabilidad ni intención.
 
 ## Qué cuenta
@@ -37,4 +41,3 @@ Mantén esos controles activos para una puntuación uniforme en la liga.
 
 Los puntos alimentan la escala de sanciones. Los cortes tienen un contador
 separado. Consulta [sanciones](rules-and-sanctions.md) y [ajustes](server-admin.md).
-

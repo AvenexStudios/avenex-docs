@@ -10,6 +10,7 @@ administrador; los números de módulo no son instaladores independientes.
 
 | Módulo | Versión |
 | --- | --- |
+| Detección y puntuación de incidentes | 0.1.0 |
 | Cortes de pista | 0.1.0 |
 | Drive-through | 0.1.0 |
 | Stop & Go | 0.1.0 |
@@ -19,4 +20,3 @@ administrador; los números de módulo no son instaladores independientes.
 Los demás controles disponibles se distribuyen con la versión de la aplicación,
 sin una versión de módulo independiente indicada aquí. Consulta [Administración](server-admin.md)
 para conocer disponibilidad y opciones.
-

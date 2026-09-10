@@ -1,5 +1,8 @@
 # Incidents and severity
 
+Included in Avenex Race Control **0.1.0**: contact detection, severity
+classification and incident scoring. See [module versions](versions.md).
+
 Avenex counts involvement in accidents, not fault or intent.
 
 ## What counts
@@ -35,4 +38,3 @@ controls enabled for uniform league scoring.
 
 Incident points feed the penalty ladder. Track cuts have a separate counter.
 See [penalties](rules-and-sanctions.md) and [admin settings](server-admin.md).
-

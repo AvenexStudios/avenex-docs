@@ -10,6 +10,7 @@ version numbers are not independent installers.
 
 | Module | Version |
 | --- | --- |
+| Incident detection and scoring | 0.1.0 |
 | Track cuts | 0.1.0 |
 | Drive-through | 0.1.0 |
 | Stop & Go | 0.1.0 |
@@ -19,4 +20,3 @@ version numbers are not independent installers.
 Other available controls ship with the application version and do not have an
 independent module version listed here. See [Administration](server-admin.md)
 for availability and settings.
-
