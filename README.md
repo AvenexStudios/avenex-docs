@@ -17,6 +17,7 @@ pages remain inside each product documentation site.
 ```powershell
 python -m pip install -r requirements.txt
 python -m mkdocs serve -f AvenexRaceControl/mkdocs.yml
+python -m mkdocs serve -f CoDriverAIRaceEngineer/mkdocs.yml
 ```
 
 ## Publish
@@ -38,3 +39,6 @@ repository settings, set Pages source to **GitHub Actions**.
 
 - `AvenexRaceControl/` builds the public Avenex Race Control documentation at
   `/AvenexRaceControl/` (English) and `/AvenexRaceControl/es/` (Spanish).
+- `CoDriverAIRaceEngineer/` builds the public CoDriver AI Race Engineer
+  documentation at `/CoDriverAIRaceEngineer/` (English) and
+  `/CoDriverAIRaceEngineer/es/` (Spanish).

@@ -1,0 +1,19 @@
+{
+  "product": "CoDriver AI Race Engineer",
+  "version": "0.1.0",
+  "production": false,
+  "modules": [
+    {
+      "id": "team-radio",
+      "version": "0.1.0"
+    },
+    {
+      "id": "telemetry",
+      "version": "0.1.0"
+    },
+    {
+      "id": "race-engineer",
+      "version": "0.1.0"
+    }
+  ]
+}

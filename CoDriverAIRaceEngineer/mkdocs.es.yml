@@ -1,0 +1,32 @@
+INHERIT: mkdocs.yml
+site_url: https://docs.avenexstudio.com/CoDriverAIRaceEngineer/es/
+site_description: Radio de equipo y asistente de ingeniero de carrera offline para sim racing.
+docs_dir: docs/es
+site_dir: ../site/CoDriverAIRaceEngineer/es
+exclude_docs: ""
+theme:
+  language: es
+  palette:
+    - scheme: slate
+      primary: black
+      accent: cyan
+      toggle:
+        icon: material/weather-sunny
+        name: Modo claro
+    - scheme: default
+      primary: black
+      accent: cyan
+      toggle:
+        icon: material/weather-night
+        name: Modo oscuro
+extra:
+  version_label: "Versión preliminar"
+nav:
+  - Inicio: index.md
+  - Descargas: downloads.md
+  - Instalación: installation.md
+  - Team Radio: team-radio.md
+  - Spotter: spotter.md
+  - Race Engineer: race-engineer.md
+  - Solución de problemas: troubleshooting.md
+  - Versiones: versions.md
