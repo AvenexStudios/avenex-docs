@@ -7,6 +7,7 @@ Public documentation hub for Avenex Studios projects.
 Shared Avenex operating standards live under `standards/`.
 
 - [Codex operating standard](standards/codex-operating-standard.md)
+- [GitHub Projects to Jira migration and epic organization](standards/github-to-jira-migration.md)
 
 Product repositories use these standards to define how planning, architecture,
 implementation, QA and public documentation work are handled. Customer-facing
