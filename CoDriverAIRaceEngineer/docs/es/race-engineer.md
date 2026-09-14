@@ -7,14 +7,23 @@ reconocimiento de voz local, telemetría en vivo y reproducción de voz local.
 
 Haz preguntas cortas de contexto de carrera, por ejemplo:
 
-- What is my position?
-- What is my fuel?
-- What is my lap time?
-- What gear am I in?
-- What is my speed?
+| Tema | Preguntas de ejemplo |
+| ---- | -------------------- |
+| Posición | What is my position? Where am I? |
+| Gaps | What is the gap ahead? What is the gap behind? |
+| Sesión | How many laps left? How long left? |
+| Ritmo | What was my last lap? What is my best lap? What lap am I on? |
+| Combustible | How much fuel? How many laps of fuel do I have left? |
+| Estado del auto | What gear am I in? What is my speed? What are my RPM? |
+| Condiciones | What is the track temperature? What is the air temperature? |
+| Controles | Say again. Repeat that. Keep quiet. Keep me informed. |
 
 La preview es determinística: las respuestas salen de patrones conocidos y
 telemetría disponible, no de análisis libre en tiempo real.
+
+Algunas preguntas dependen de campos de telemetría que pueden no estar
+disponibles en todas las sesiones. Cuando falta información, el ingeniero
+debería decir que no tiene ese dato en lugar de inventarlo.
 
 ## Voz
 

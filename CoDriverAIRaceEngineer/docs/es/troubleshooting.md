@@ -19,9 +19,22 @@
 - Haz una pregunta corta soportada en inglés.
 - Confirma que la telemetría de Assetto Corsa esté disponible si la pregunta
   requiere datos en vivo.
+- Mantén presionado el input de pregunta mientras hablas y suéltalo para enviar
+  la pregunta.
+- Prueba una pregunta escrita para confirmar que el pipeline del ingeniero
+  funcione.
 
 ## La voz suena degradada
 
 La app puede usar una voz fallback si la reproducción local no está disponible.
 Reinicia la app y confirma que el panel de readiness informe la voz local como
 ready.
+
+## Faltan datos de telemetría
+
+- Inicia Assetto Corsa antes de preguntar por telemetría.
+- Entra a una sesión de conducción en vivo, no solo al launcher o menú.
+- Confirma que el panel de telemetría de CoDriver muestre velocidad, marcha,
+  RPM, combustible y datos de sesión.
+- Si un campo específico no está disponible, el ingeniero debería responder que
+  no tiene ese dato.

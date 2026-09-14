@@ -8,3 +8,9 @@ función no forma parte de la preview pública actual.
 
 Esta página se ampliará después de que el comportamiento de spotter esté
 implementado y aprobado.
+
+## Guía actual
+
+No dependas de CoDriver para avisos de proximidad en la preview actual. Usa el
+simulador, espejos u otra herramienta de spotter aprobada hasta que esta función
+sea publicada.

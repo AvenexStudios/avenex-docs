@@ -21,3 +21,22 @@ distintas PCs.
 
 Team Radio usa el backend de signaling configurado por Avenex para descubrir el
 equipo y WebRTC para transporte de voz.
+
+## Prueba con dos PCs
+
+Usa la misma build preliminar aprobada en ambas PCs.
+
+1. Abre la app en ambas PCs.
+2. En la PC 1, crea un equipo y copia el código de invitación.
+3. En la PC 2, únete con ese código.
+4. Confirma que ambos pilotos aparezcan en el roster.
+5. Asigna push-to-talk en ambas PCs.
+6. Mantén push-to-talk en la PC 1 y habla.
+7. Repite desde la PC 2.
+8. Cambia un dispositivo de audio mientras estás conectado y confirma que la voz
+   siga funcionando.
+9. Desconecta y reconecta una PC para confirmar que roster y voz se recuperen.
+
+Si la voz no llega, confirma permisos del micrófono, dispositivos
+seleccionados, permisos de red y que otra app no esté usando el micrófono de
+manera exclusiva.

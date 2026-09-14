@@ -11,6 +11,21 @@ CoDriver AI Race Engineer actualmente apunta a Windows.
 5. Abre la app y confirma que los paneles de entrada de audio, salida y modelos
    muestren estado ready antes de probar funciones de voz.
 
+## Configuración de audio
+
+- Selecciona el micrófono que quieres usar.
+- Selecciona el dispositivo de salida donde deberían sonar Team Radio y las
+  respuestas del Race Engineer.
+- Asigna una tecla push-to-talk o un control compatible.
+- Usa el medidor de señal de entrada para confirmar que la app recibe audio del
+  micrófono.
+
+## Configuración de telemetría
+
+La telemetría de Assetto Corsa se detecta localmente mientras hay una sesión de
+conducción en ejecución. Inicia una sesión antes de preguntar por posición,
+combustible, velocidad, marcha, RPM, tiempo de vuelta o tiempo de sesión.
+
 ## Primer inicio
 
 El primer inicio puede preparar recursos locales de voz antes de que el

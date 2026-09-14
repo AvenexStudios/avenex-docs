@@ -7,14 +7,23 @@ recognition, live telemetry, and local voice playback.
 
 Ask short race-context questions such as:
 
-- What is my position?
-- What is my fuel?
-- What is my lap time?
-- What gear am I in?
-- What is my speed?
+| Topic | Example questions |
+| ----- | ----------------- |
+| Position | What is my position? Where am I? |
+| Gaps | What is the gap ahead? What is the gap behind? |
+| Session | How many laps left? How long left? |
+| Pace | What was my last lap? What is my best lap? What lap am I on? |
+| Fuel | How much fuel? How many laps of fuel do I have left? |
+| Car state | What gear am I in? What is my speed? What are my RPM? |
+| Conditions | What is the track temperature? What is the air temperature? |
+| Controls | Say again. Repeat that. Keep quiet. Keep me informed. |
 
 The preview is deterministic: answers come from known question patterns and
 available telemetry rather than free-form live analysis.
+
+Some questions depend on telemetry fields that may not be available in every
+session. When data is missing, the engineer should say that it does not have the
+data instead of guessing.
 
 ## Voice
 
