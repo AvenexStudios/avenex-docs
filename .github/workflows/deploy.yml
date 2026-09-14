@@ -36,6 +36,8 @@ jobs:
           cp -R public/. site/
           mkdocs build --strict -f AvenexRaceControl/mkdocs.yml
           mkdocs build --strict -f AvenexRaceControl/mkdocs.es.yml
+          mkdocs build --strict -f CoDriverAIRaceEngineer/mkdocs.yml
+          mkdocs build --strict -f CoDriverAIRaceEngineer/mkdocs.es.yml
           python tools/check-docs.py
 
       - name: Configure Pages

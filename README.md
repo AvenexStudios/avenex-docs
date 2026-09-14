@@ -22,9 +22,9 @@ python -m mkdocs serve -f CoDriverAIRaceEngineer/mkdocs.yml
 
 ## Publish
 
-Build both language configurations in order: mkdocs.yml, then mkdocs.es.yml.
-Run `python tools/check-docs.py` after building to validate pages and links.
-Use mkdocs.es.yml for a Spanish preview.
+Build both language configurations in order: mkdocs.yml, then mkdocs.es.yml for
+every project folder. Run `python tools/check-docs.py` after building to
+validate pages and links. Use mkdocs.es.yml for a Spanish preview.
 
 Public pages are customer documentation only. Keep product-specific
 architecture, QA evidence, approval history and migration plans in the private
